@@ -198,11 +198,6 @@ impl Board {
     }
 }
 
-/// Turns a lowercase ASCII character to lowercase
-fn to_upper(c: u8) -> u8 {
-    if c >= b'a' && c <= b'z' { c - 32 } else { c }
-}
-
 impl Piece {
     /// Returns the corresponding ASCII character of the Piece.
     /// For example Pawn would return b'p'
@@ -216,7 +211,7 @@ impl Piece {
             PieceType::King => b'k',
         };
         match self.color {
-            Color::White => to_upper(letter),
+            Color::White => letter.to_ascii_uppercase(),
             Color::Black => letter,
         }
     }
