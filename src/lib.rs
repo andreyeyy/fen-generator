@@ -1,12 +1,11 @@
+#![allow(unused)]
 use rand::Rng;
 
 const N_SQUARES: usize = 64;
 
-#[derive(Debug)]
-enum Color {
-    White,
-    Black,
-}
+type Color = bool;
+const WHITE: Color = true;
+const BLACK: Color = false;
 
 enum PieceType {
     Pawn,
@@ -55,7 +54,7 @@ impl Board {
     fn new() -> Self {
         Board {
             squares: [const { None }; N_SQUARES],
-            turn: Color::White,
+            turn: WHITE,
         }
     }
 
@@ -72,10 +71,7 @@ impl Board {
             (-1, 0),
         ];
         let mut board = Board::new();
-        board.turn = match rng.random_bool(0.5){
-            true => Color::White,
-            false => Color::Black,
-        };
+        board.turn = rng.random_bool(0.5);
 
         let mut white_king_pos: usize = 0;
         let mut black_king_pos: usize = 0;
@@ -88,7 +84,7 @@ impl Board {
 
             board.squares[white_king_pos] = Some(Piece {
                 piece_type: PieceType::King,
-                color: Color::White,
+                color: WHITE,
             });
 
             let (white_king_file, white_king_rank) = board_index_reverse(white_king_pos);
@@ -125,7 +121,7 @@ impl Board {
 
             board.squares[black_king_pos] = Some(Piece {
                 piece_type: PieceType::King,
-                color: Color::Black,
+                color: BLACK,
             });
 
         } // Here we end placing the kings
@@ -169,8 +165,8 @@ impl Board {
 
         fen.push(' ');
         fen.push(match self.turn {
-            Color::White => 'w',
-            Color::Black => 'b',
+            WHITE => 'w',
+            BLACK => 'b',
         });
 
         fen.push_str(" - - 0 1");
@@ -211,8 +207,8 @@ impl Piece {
             PieceType::King => b'k',
         };
         match self.color {
-            Color::White => letter.to_ascii_uppercase(),
-            Color::Black => letter,
+            WHITE => letter.to_ascii_uppercase(),
+            BLACK => letter,
         }
     }
 }
