@@ -210,7 +210,7 @@ impl Piece {
         let letter = match self.piece_type {
             PieceType::Pawn => b'p',
             PieceType::Rook => b'r',
-            PieceType::Knight => b'k',
+            PieceType::Knight => b'n',
             PieceType::Bishop => b'b',
             PieceType::Queen => b'q',
             PieceType::King => b'k',
